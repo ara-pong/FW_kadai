@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h1>{{ entry.name }}</h1>
+  <p>日付: {{ entry.date }}</p>
+  <p>種類: {{ entry.get_drink_type_display }}</p>
+  <p>金額: {{ entry.price }} 円</p>
+  <p>メモ: <pre>{{ entry.memo }}</pre></p>
+  <a class="btn btn-secondary" href="{% url 'entry_update' entry.pk %}">編集</a>
+  <a class="btn btn-danger" href="{% url 'entry_delete' entry.pk %}">削除</a>
+  <a class="btn btn-link" href="{% url 'entry_list' %}">一覧へ戻る</a>
+</div>
+{% endblock %}

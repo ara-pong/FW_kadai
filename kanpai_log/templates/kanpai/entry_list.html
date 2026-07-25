@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <h1>{{ filter_label|default:'Kanpai Log' }}</h1>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <form method="get" class="row g-2 align-items-end">
+        <div class="col-auto">
+          <label class="form-label" for="year">年</label>
+          <input id="year" name="year" type="number" value="{{ year }}" class="form-control" placeholder="YYYY">
+        </div>
+        <div class="col-auto">
+          <label class="form-label" for="month">月</label>
+          <input id="month" name="month" type="number" min="1" max="12" value="{{ month }}" class="form-control" placeholder="MM">
+        </div>
+        <div class="col-auto">
+          <label class="form-label" for="day">日</label>
+          <input id="day" name="day" type="number" min="1" max="31" value="{{ day }}" class="form-control" placeholder="DD">
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-outline-primary" type="submit">絞り込み</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-6 text-end">
+      <a class="btn btn-outline-secondary" href="{% url 'entry_list' %}">すべて</a>
+      <a class="btn btn-outline-secondary" href="{% url 'tsumami_list' %}">つまみ</a>
+    </div>
+  </div>
+  <p>今月の合計: {{ current_month_total }} 円</p>
+  <p>表示中の合計: {{ total }} 円</p>
+  <a class="btn btn-primary" href="{% url 'entry_create' %}">新しい記録を追加</a>
+  <table class="table mt-3">
+    <thead>
+      <tr>
+        <th>日付</th>
+        <th>店名/銘柄</th>
+        <th>種類</th>
+        <th>金額</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in entries %}
+      <tr>
+        <td>{{ entry.date }}</td>
+        <td><a href="{% url 'entry_detail' entry.pk %}">{{ entry.name }}</a></td>
+        <td>{{ entry.get_drink_type_display }}</td>
+        <td>{{ entry.price }} 円</td>
+        <td>
+          <a class="btn btn-sm btn-secondary" href="{% url 'entry_update' entry.pk %}">編集</a>
+          <a class="btn btn-sm btn-danger" href="{% url 'entry_delete' entry.pk %}">削除</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5">記録がありません</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
