@@ -21,4 +21,4 @@ Kanpai Log - 最終課題 Django サンプル
 
 ## 備考
 - データは `db.sqlite3` に保存されます。
-- 管理画面を利用したい場合は `python manage.py createsuperuser` を実行し、`http://127.0.0.1:8000/admin/` にアクセスしてください。
+-
